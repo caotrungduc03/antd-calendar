@@ -1,0 +1,18 @@
+.antd-calendar .tw-text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem
+}
+
+.antd-calendar .tw-font-bold {
+  font-weight: 700
+}
+
+.antd-calendar .tw-text-blue-900 {
+  --tw-text-opacity: 1;
+  color: rgb(30 58 138 / var(--tw-text-opacity, 1))
+}
+
+.antd-calendar .tw-text-red-900 {
+  --tw-text-opacity: 1;
+  color: rgb(127 29 29 / var(--tw-text-opacity, 1))
+}
