@@ -1,50 +1,54 @@
-# React + TypeScript + Vite
+# Antd Calendar
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> 📅 **Antd Calendar** inspired by Ant Design, with weekly and monthly views.
 
-Currently, two official plugins are available:
+## Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+npm install antd-calendar
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+```bash
+yarn add antd-calendar
+```
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Usage
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```tsx
+import AntdCalendar from "antd-calendar-beta";
+import { IEvent } from "antd-calendar-beta/dist/types";
+
+function App() {
+  const events = [
+    {
+      eventId: "1738514496343-0",
+      title: "Random Event 1",
+      startTime: new Date("2025-01-24T11:20:36.343Z"),
+      endTime: new Date("2025-01-24T15:20:36.343Z"),
+      type: "info",
+    },
+    {
+      eventId: "1738514496343-1",
+      title: "Random Event 2",
+      startTime: new Date("2025-01-25T02:48:36.343Z"),
+      endTime: new Date("2025-01-25T06:48:36.343Z"),
+      type: "info",
+    },
+    {
+      eventId: "1738514496343-2",
+      title: "Random Event 3",
+      startTime: new Date("2025-01-17T19:57:36.343Z"),
+      endTime: new Date("2025-01-17T21:57:36.343Z"),
+      type: "warning",
+    },
+  ] as IEvent[];
+
+  const handleOpenDetail = () => {
+    console.log("Clicked");
+  };
+
+  return <AntdCalendar events={events} handleOpenDetail={handleOpenDetail} />;
+}
+
+export default App;
 ```
