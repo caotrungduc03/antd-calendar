@@ -1,7 +1,7 @@
 {
   "name": "antd-calendar",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -44,6 +44,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/caotrungduc03/ant-calendar.git"
-  }
+    "url": "https://github.com/caotrungduc03/antd-calendar.git"
+  },
+  "license": "MIT"
 }
