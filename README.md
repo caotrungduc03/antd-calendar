@@ -15,8 +15,8 @@ yarn add antd-calendar
 ## Usage
 
 ```tsx
-import AntdCalendar from "antd-calendar-beta";
-import { IEvent } from "antd-calendar-beta/dist/types";
+import AntdCalendar from "antd-calendar";
+import { IEvent } from "antd-calendar/dist/types";
 
 function App() {
   const events = [
