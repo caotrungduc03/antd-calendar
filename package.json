@@ -1,7 +1,7 @@
 {
   "name": "antd-calendar",
   "private": false,
-  "version": "1.1.0",
+  "version": "1.1.1",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,8 +20,8 @@
     "css:dev": "npx tailwindcss -i ./src/tailwind.css -o ./src/components/AntdCalendar.css --watch"
   },
   "dependencies": {
-    "antd": "5.22.3",
-    "dayjs": "1.11.7",
+    "antd": "^5.22.3",
+    "dayjs": "^1.11.7",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },
