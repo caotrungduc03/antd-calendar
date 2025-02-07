@@ -317,6 +317,38 @@
   color: rgb(255 255 255 / var(--tw-text-opacity, 1))
 }
 
+.antd-calendar .event-info {
+  --tw-border-opacity: 1;
+  border-color: rgb(23 108 221 / var(--tw-border-opacity, 1));
+  background-color: rgb(23 108 221 / 0.05);
+  --tw-text-opacity: 1;
+  color: rgb(23 108 221 / var(--tw-text-opacity, 1))
+}
+
+.antd-calendar .event-warning {
+  --tw-border-opacity: 1;
+  border-color: rgb(236 148 14 / var(--tw-border-opacity, 1));
+  background-color: rgb(236 148 14 / 0.05);
+  --tw-text-opacity: 1;
+  color: rgb(236 148 14 / var(--tw-text-opacity, 1))
+}
+
+.antd-calendar .event-success {
+  --tw-border-opacity: 1;
+  border-color: rgb(7 175 23 / var(--tw-border-opacity, 1));
+  background-color: rgb(7 175 23 / 0.05);
+  --tw-text-opacity: 1;
+  color: rgb(7 175 23 / var(--tw-text-opacity, 1))
+}
+
+.antd-calendar .event-error {
+  --tw-border-opacity: 1;
+  border-color: rgb(240 25 25 / var(--tw-border-opacity, 1));
+  background-color: rgb(240 25 25 / 0.05);
+  --tw-text-opacity: 1;
+  color: rgb(240 25 25 / var(--tw-text-opacity, 1))
+}
+
 .antd-calendar .ant-table-thead .ant-table-cell,
 .antd-calendar .ant-table-tbody .ant-table-cell {
   border-style: none;
@@ -331,7 +363,7 @@
 }
 
 .antd-calendar .ant-picker input {
-  width: 15ch;
+  width: 150px;
   cursor: pointer;
   font-size: 18px !important;
   font-weight: 600 !important;
@@ -368,38 +400,6 @@
   border-width: 0.5px
 }
 
-.event-info {
-  --tw-border-opacity: 1;
-  border-color: rgb(23 108 221 / var(--tw-border-opacity, 1));
-  background-color: rgb(23 108 221 / 0.05);
-  --tw-text-opacity: 1;
-  color: rgb(23 108 221 / var(--tw-text-opacity, 1))
-}
-
-.event-warning {
-  --tw-border-opacity: 1;
-  border-color: rgb(236 148 14 / var(--tw-border-opacity, 1));
-  background-color: rgb(236 148 14 / 0.05);
-  --tw-text-opacity: 1;
-  color: rgb(236 148 14 / var(--tw-text-opacity, 1))
-}
-
-.event-success {
-  --tw-border-opacity: 1;
-  border-color: rgb(7 175 23 / var(--tw-border-opacity, 1));
-  background-color: rgb(7 175 23 / 0.05);
-  --tw-text-opacity: 1;
-  color: rgb(7 175 23 / var(--tw-text-opacity, 1))
-}
-
-.event-error {
-  --tw-border-opacity: 1;
-  border-color: rgb(240 25 25 / var(--tw-border-opacity, 1));
-  background-color: rgb(240 25 25 / 0.05);
-  --tw-text-opacity: 1;
-  color: rgb(240 25 25 / var(--tw-text-opacity, 1))
-}
-
 .antd-calendar .focus-within\:tw-border-none:focus-within {
   border-style: none
 }
@@ -409,3 +409,5 @@
   --tw-shadow-colored: 0 0 #0000;
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
 }
+
+

@@ -57,9 +57,6 @@ module.exports = {
         button: "#F9F9F9",
         input: "#DBDFE9",
       },
-      width: {
-        "15ch": "15ch",
-      },
     },
   },
   plugins: [],

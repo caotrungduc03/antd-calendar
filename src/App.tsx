@@ -2,7 +2,7 @@ import { Card, Modal } from "antd";
 import dayjs, { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
 import AntdCalendar from "./";
-import { IEvent, TypeEvent } from "./types";
+import { IEvent, EventType } from "./types";
 
 const isEventOverlap = (newEvent: IEvent, existingEvents: IEvent[]): boolean => {
   return existingEvents.some((existingEvent) => {
@@ -17,7 +17,7 @@ const isEventOverlap = (newEvent: IEvent, existingEvents: IEvent[]): boolean => 
 
 const generateRandomEvents = (numberOfEvents: number): IEvent[] => {
   const fakeEvents: IEvent[] = [];
-  const eventTypes: TypeEvent[] = ["info", "success", "warning", "error"];
+  const eventTypes: EventType[] = ["info", "success", "warning", "error"];
 
   for (let i = 0; i < numberOfEvents; i++) {
     const randomDaysOffset = Math.floor(Math.random() * 30) - 15; // Random offset between -15 and +15 days
@@ -38,6 +38,7 @@ const generateRandomEvents = (numberOfEvents: number): IEvent[] => {
       startTime,
       endTime,
       type: randomType,
+      description: "This is a random event",
     };
 
     if (!isEventOverlap(newEvent, fakeEvents)) {
