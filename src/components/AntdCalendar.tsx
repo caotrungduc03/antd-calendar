@@ -19,7 +19,7 @@ const AntdCalendar = ({ events, handleOpenDetail }: IAntdCalendarProps) => {
 
   return (
     <div className="antd-calendar">
-      <div className="tw-flex tw-flex-col tw-gap-y-6 tw-mt-8 tw-px-8 tw-pb-8 tw-bg-white tw-border-t-0.25 tw-border-solid tw-border-[#F1F1F4]">
+      <div className="tw-flex tw-flex-col tw-gap-y-6 tw-mt-8 tw-px-8 tw-pb-8 tw-bg-white">
         <HeaderCalendar
           title="Cao Trung Đức"
           currentDate={currentDate}
