@@ -1,9 +1,9 @@
 import { DAYS_OF_WEEK } from "../constants";
 
 // Types
-export type TypeEvent = "info" | "success" | "warning" | "error";
+export type EventType = "info" | "success" | "warning" | "error" | "default";
 
-export type TypeCalendar = "month" | "week";
+export type CalendarMode = "month" | "week";
 
 export type DaysOfWeekKeys = keyof typeof DAYS_OF_WEEK;
 
@@ -13,7 +13,8 @@ export interface IEvent {
   title: string;
   startTime: Date;
   endTime: Date;
-  type: TypeEvent;
+  type: EventType;
+  description?: string;
 }
 
 export type ITableColumn = {
