@@ -8,6 +8,7 @@ interface IWeeklyCalendarProps {
   startWeek: Dayjs;
   events: IEvent[];
   handleOpenDetail: (date: Dayjs, events: IEvent[]) => void;
+  handleOpenCreate: (date: Dayjs) => void;
 }
 
 interface IWeeklyCell {
@@ -41,7 +42,7 @@ const getEventsOfDay = (events: IEvent[], targetHour: Dayjs) =>
     return acc;
   }, {} as EventsByDay);
 
-const WeeklyCalendar = ({ startWeek, events, handleOpenDetail }: IWeeklyCalendarProps) => {
+const WeeklyCalendar = ({ startWeek, events, handleOpenDetail, handleOpenCreate }: IWeeklyCalendarProps) => {
   const getTableColumns = () => {
     const hourColumn: ITableColumn = {
       title: (
@@ -66,7 +67,13 @@ const WeeklyCalendar = ({ startWeek, events, handleOpenDetail }: IWeeklyCalendar
       dataIndex: day,
       key: day,
       render: (value: IWeeklyCell) => (
-        <WeeklyCell key={index} events={value.events} date={value.date} handleOpenDetail={handleOpenDetail} />
+        <WeeklyCell
+          key={index}
+          events={value.events}
+          date={value.date}
+          handleOpenDetail={handleOpenDetail}
+          handleOpenCreate={handleOpenCreate}
+        />
       ),
     }));
 

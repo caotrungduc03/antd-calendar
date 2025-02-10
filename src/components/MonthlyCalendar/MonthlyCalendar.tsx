@@ -8,6 +8,7 @@ interface IMonthlyCalendarProps {
   startMonth: Dayjs;
   events: IEvent[];
   handleOpenDetail: (date: Dayjs, events: IEvent[]) => void;
+  handleOpenCreate: (date: Dayjs) => void;
 }
 
 interface IMonthlyCell {
@@ -28,7 +29,7 @@ const getEventsOfWeek = (events: IEvent[], targetDate: Dayjs): EventsByDay =>
     return acc;
   }, {} as EventsByDay);
 
-const MonthlyCalendar = ({ startMonth, events, handleOpenDetail }: IMonthlyCalendarProps) => {
+const MonthlyCalendar = ({ startMonth, events, handleOpenDetail, handleOpenCreate }: IMonthlyCalendarProps) => {
   const getTableColumns = () => {
     const weeklyNormColumn: ITableColumn = {
       title: <div className="tw-text-center tw-font-semibold tw-text-xs tw-w-[100px]">Weekly Norm</div>,
@@ -54,6 +55,7 @@ const MonthlyCalendar = ({ startMonth, events, handleOpenDetail }: IMonthlyCalen
           date={value.date}
           startMonth={startMonth}
           handleOpenDetail={handleOpenDetail}
+          handleOpenCreate={handleOpenCreate}
         />
       ),
     }));
