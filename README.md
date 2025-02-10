@@ -43,11 +43,22 @@ function App() {
     },
   ] as IEvent[];
 
-  const handleOpenDetail = () => {
-    console.log("Clicked");
+  const handleOpenDetail = (date: Dayjs, events: IEvent[]) => {
+    console.log("Click handle open detail");
+    console.log({
+      date: date.format("YYYY-MM-DD HH:mm:ss"),
+      events,
+    });
   };
 
-  return <AntdCalendar events={events} handleOpenDetail={handleOpenDetail} />;
+  const handleOpenCreate = (date: Dayjs) => {
+    console.log("Click handle open create");
+    console.log({
+      date: date.format("YYYY-MM-DD HH:mm:ss"),
+    });
+  };
+
+  return <AntdCalendar events={events} handleOpenDetail={handleOpenDetail} handleOpenCreate={handleOpenCreate} />;
 }
 
 export default App;
