@@ -1,4 +1,4 @@
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import AntdCalendar from "./";
 import { EventType, IEvent } from "./types";
@@ -54,19 +54,14 @@ function App() {
     setEvents(generateRandomEvents(20));
   }, []);
 
-  const handleOpenDetail = (date: Dayjs, events: IEvent[]) => {
+  const handleOpenDetail = (date: Date, events: IEvent[]) => {
     console.log("Click handle open detail");
-    console.log({
-      date: date.format("YYYY-MM-DD HH:mm:ss"),
-      events,
-    });
+    console.log({ date, events });
   };
 
-  const handleOpenCreate = (date: Dayjs) => {
+  const handleOpenCreate = (date: Date) => {
     console.log("Click handle open create");
-    console.log({
-      date: date.format("YYYY-MM-DD HH:mm:ss"),
-    });
+    console.log({ date });
   };
 
   return (

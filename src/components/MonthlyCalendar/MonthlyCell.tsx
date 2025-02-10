@@ -7,8 +7,8 @@ interface IMonthlyCellProps {
   events: IEvent[];
   date: Dayjs;
   startMonth: Dayjs;
-  handleOpenDetail: (date: Dayjs, events: IEvent[]) => void;
-  handleOpenCreate: (date: Dayjs) => void;
+  handleOpenDetail: (date: Date, events: IEvent[]) => void;
+  handleOpenCreate: (date: Date) => void;
 }
 
 const MonthlyCell = ({ startMonth, events, date, handleOpenDetail, handleOpenCreate }: IMonthlyCellProps) => {
@@ -19,7 +19,7 @@ const MonthlyCell = ({ startMonth, events, date, handleOpenDetail, handleOpenCre
   const handleClick = (e: MouseEvent<HTMLDivElement>) => {
     if (e.target !== e.currentTarget) return;
 
-    handleOpenCreate(dayjs(date).startOf("day").add(dayjs().hour(), "hour"));
+    handleOpenCreate(dayjs(date).startOf("day").add(dayjs().hour(), "hour").toDate());
   };
 
   return (
@@ -36,7 +36,10 @@ const MonthlyCell = ({ startMonth, events, date, handleOpenDetail, handleOpenCre
       >
         {date.format("DD")}
       </div>
-      <ul className="tw-flex tw-flex-col tw-gap-y-1 tw-cursor-pointer" onClick={() => handleOpenDetail(date, events)}>
+      <ul
+        className="tw-flex tw-flex-col tw-gap-y-1 tw-cursor-pointer"
+        onClick={() => handleOpenDetail(date.toDate(), events)}
+      >
         {events.slice(0, 2).map((event, index) => (
           <MonthlyEvent key={index} event={event} isSameMonth={isSameMonth} />
         ))}

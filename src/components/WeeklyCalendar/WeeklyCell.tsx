@@ -6,8 +6,8 @@ import WeeklyEvent from "./WeeklyEvent";
 interface IWeeklyCellProps {
   events: IEvent[];
   date: Dayjs;
-  handleOpenDetail: (date: Dayjs, events: IEvent[]) => void;
-  handleOpenCreate: (date: Dayjs) => void;
+  handleOpenDetail: (date: Date, events: IEvent[]) => void;
+  handleOpenCreate: (date: Date) => void;
 }
 
 const WeeklyCell = ({ events, date, handleOpenDetail, handleOpenCreate }: IWeeklyCellProps) => {
@@ -16,7 +16,7 @@ const WeeklyCell = ({ events, date, handleOpenDetail, handleOpenCreate }: IWeekl
   const handleClick = (e: MouseEvent<HTMLDivElement>) => {
     if (e.target !== e.currentTarget) return;
 
-    handleOpenCreate(dayjs(date));
+    handleOpenCreate(dayjs(date).toDate());
   };
 
   return (

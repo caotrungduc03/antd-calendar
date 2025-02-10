@@ -8,8 +8,8 @@ import WeeklyCalendar from "./WeeklyCalendar/WeeklyCalendar";
 
 interface IAntdCalendarProps {
   events: IEvent[];
-  handleOpenDetail: (date: Dayjs, events: IEvent[]) => void;
-  handleOpenCreate: (date: Dayjs) => void;
+  handleOpenDetail: (date: Date, events: IEvent[]) => void;
+  handleOpenCreate: (date: Date) => void;
 }
 
 const AntdCalendar = ({ events, handleOpenDetail, handleOpenCreate }: IAntdCalendarProps) => {

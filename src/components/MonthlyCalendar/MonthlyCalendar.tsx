@@ -7,8 +7,8 @@ import MonthlyCell from "./MonthlyCell";
 interface IMonthlyCalendarProps {
   startMonth: Dayjs;
   events: IEvent[];
-  handleOpenDetail: (date: Dayjs, events: IEvent[]) => void;
-  handleOpenCreate: (date: Dayjs) => void;
+  handleOpenDetail: (date: Date, events: IEvent[]) => void;
+  handleOpenCreate: (date: Date) => void;
 }
 
 interface IMonthlyCell {
