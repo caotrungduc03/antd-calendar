@@ -1,8 +1,7 @@
-import { Card, Modal } from "antd";
-import dayjs, { Dayjs } from "dayjs";
-import { useEffect, useState } from "react";
+import dayjs from "dayjs";
+import React, { useEffect, useState } from "react";
 import AntdCalendar from "./";
-import { IEvent, EventType } from "./types";
+import { EventType, IEvent } from "./types";
 
 const isEventOverlap = (newEvent: IEvent, existingEvents: IEvent[]): boolean => {
   return existingEvents.some((existingEvent) => {
@@ -51,18 +50,18 @@ const generateRandomEvents = (numberOfEvents: number): IEvent[] => {
 
 function App() {
   const [events, setEvents] = useState<IEvent[]>([]);
-  const [detailEvents, setDetailEvents] = useState<IEvent[]>([]);
-  const [detailDate, setDetailDate] = useState<Dayjs | null>(null);
-  const [isOpenDetail, setIsOpenDetail] = useState<boolean>(false);
-
   useEffect(() => {
     setEvents(generateRandomEvents(20));
   }, []);
 
-  const handleOpenDetail = (date: Dayjs, events: IEvent[]) => {
-    setDetailDate(date);
-    setDetailEvents(events);
-    setIsOpenDetail(true);
+  const handleOpenDetail = (date: Date, events: IEvent[]) => {
+    console.log("Click handle open detail");
+    console.log({ date, events });
+  };
+
+  const handleOpenCreate = (date: Date) => {
+    console.log("Click handle open create");
+    console.log({ date });
   };
 
   return (
@@ -71,48 +70,7 @@ function App() {
         padding: "20px 100px",
       }}
     >
-      <AntdCalendar events={events} handleOpenDetail={handleOpenDetail} />
-
-      <Modal
-        title={dayjs(detailDate ?? Date.now()).format("MMMM DD, YYYY")}
-        open={isOpenDetail}
-        onCancel={() => setIsOpenDetail(false)}
-      >
-        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-          {detailEvents.map((event) => (
-            <Card key={event.eventId} className={`event-${event.type}`} style={{ borderWidth: "0" }}>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div>Event name:</div>
-                <div>{event.title}</div>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div>Time:</div>
-                <div>
-                  {dayjs(event.startTime).format("HH:mm")} - {dayjs(event.endTime).format("HH:mm")}
-                </div>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div>Event types:</div>
-                <div>
-                  {event.type === "info" && "Info"}
-                  {event.type === "success" && "Success"}
-                  {event.type === "warning" && "Warning"}
-                  {event.type === "error" && "Error"}
-                </div>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div>Node:</div>
-                <div>
-                  {event.type === "info" && "Info"}
-                  {event.type === "success" && "Success"}
-                  {event.type === "warning" && "Warning"}
-                  {event.type === "error" && "Error"}
-                </div>
-              </div>
-            </Card>
-          ))}
-        </div>
-      </Modal>
+      <AntdCalendar events={events} handleOpenDetail={handleOpenDetail} handleOpenCreate={handleOpenCreate} />
     </main>
   );
 }

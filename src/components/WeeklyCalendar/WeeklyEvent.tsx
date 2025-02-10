@@ -1,10 +1,10 @@
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { MINUTES_PER_HOUR } from "../../constants";
 import { IEvent } from "../../types";
 
 interface IWeeklyEventProps {
   event: IEvent;
-  handleOpenDetail: (date: Dayjs, events: IEvent[]) => void;
+  handleOpenDetail: (date: Date, events: IEvent[]) => void;
 }
 
 const calculateBoxSize = (startTime: Date, endTime: Date) => {
@@ -27,7 +27,7 @@ const WeeklyEvent = ({ event, handleOpenDetail }: IWeeklyEventProps) => {
         top: top + "%",
         height: height + "%",
       }}
-      onClick={() => handleOpenDetail(dayjs(event.startTime), [event])}
+      onClick={() => handleOpenDetail(dayjs(event.startTime).toDate(), [event])}
     >
       <div className={`tw-text-sm tw-font-normal tw-line-clamp-${Math.min(height / 100, 6)}`}>{event.title}</div>
       <div className="tw-text-sm tw-font-normal">
