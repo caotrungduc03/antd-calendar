@@ -41,6 +41,10 @@
   @apply tw-border-error tw-bg-error/5 tw-text-error;
 }
 
+.antd-calendar .event-default {
+  @apply tw-bg-secondary tw-text-gray-2;
+}
+
 .antd-calendar .ant-table-thead .ant-table-cell,
 .antd-calendar .ant-table-tbody .ant-table-cell {
   @apply tw-border-none tw-bg-transparent before:!tw-w-0 tw-p-0;
@@ -74,5 +78,3 @@
 .weekly-calendar .ant-table-tbody .ant-table-cell {
   @apply tw-border-[0.5px];
 }
-
-
