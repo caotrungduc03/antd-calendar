@@ -18,7 +18,7 @@ interface IMonthlyCell {
 
 type EventsByDay = Record<DaysOfWeekKeys, IMonthlyCell>;
 
-const daysOfWeekKeys = Object.keys(DAYS_OF_WEEK) as DaysOfWeekKeys[];
+const daysOfWeekKeys = Object.values(DAYS_OF_WEEK);
 
 const getEventsOfWeek = (events: IEvent[], targetDate: Dayjs): EventsByDay =>
   daysOfWeekKeys.reduce((acc: EventsByDay, day, index) => {
@@ -43,7 +43,7 @@ const MonthlyCalendar = ({ startMonth, events, handleOpenDetail, handleOpenCreat
       ),
     };
 
-    const dayColumns: ITableColumn[] = Object.keys(DAYS_OF_WEEK).map((day, index) => ({
+    const dayColumns: ITableColumn[] = Object.values(DAYS_OF_WEEK).map((day, index) => ({
       title: <div className="tw-text-center tw-font-semibold tw-text-xs">{day.slice(0, 3)}</div>,
       dataIndex: day,
       key: day,

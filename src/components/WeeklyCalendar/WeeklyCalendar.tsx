@@ -18,7 +18,7 @@ interface IWeeklyCell {
 
 type EventsByDay = Record<DaysOfWeekKeys, IWeeklyCell>;
 
-const daysOfWeekKeys = Object.keys(DAYS_OF_WEEK) as DaysOfWeekKeys[];
+const daysOfWeekKeys = Object.values(DAYS_OF_WEEK);
 
 const getEventAllDay = (events: IEvent[], targetDate: Dayjs) =>
   daysOfWeekKeys.reduce((acc: EventsByDay, day, index) => {
@@ -57,7 +57,7 @@ const WeeklyCalendar = ({ startWeek, events, handleOpenDetail, handleOpenCreate 
       render: (value: string) => <div className="tw-text-center tw-text-xs">{value}</div>,
     };
 
-    const dayColumns: ITableColumn[] = Object.keys(DAYS_OF_WEEK).map((day, index) => ({
+    const dayColumns: ITableColumn[] = Object.values(DAYS_OF_WEEK).map((day, index) => ({
       title: (
         <div className="tw-flex tw-flex-col tw-gap-y-0.5 tw-text-center tw-font-semibold tw-text-xs">
           <div>{day.slice(0, 3)}</div>

@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import { IEvent } from "../../types";
+import { convertType } from "../../utils";
 
 interface IMonthlyEventProps {
   event: IEvent;
@@ -9,7 +10,7 @@ interface IMonthlyEventProps {
 const MonthlyEvent = ({ event, isSameMonth }: IMonthlyEventProps) => {
   return (
     <li
-      className={`tw-px-2 tw-py-0.5 tw-rounded event-${event.type} ${
+      className={`tw-px-2 tw-py-0.5 tw-rounded event-${convertType[event.type]} ${
         !isSameMonth ? "tw-bg-secondary tw-text-gray-2" : ""
       }`}
     >
