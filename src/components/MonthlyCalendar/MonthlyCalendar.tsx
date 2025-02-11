@@ -18,12 +18,12 @@ interface IMonthlyCell {
 
 type EventsByDay = Record<DaysOfWeekKeys, IMonthlyCell>;
 
-const daysOfWeekKeys = Object.keys(DAYS_OF_WEEK) as DaysOfWeekKeys[];
+const daysOfWeekKeys = Object.values(DAYS_OF_WEEK);
 
 const getEventsOfWeek = (events: IEvent[], targetDate: Dayjs): EventsByDay =>
   daysOfWeekKeys.reduce((acc: EventsByDay, day, index) => {
     acc[day] = {
-      events: events.filter((event) => dayjs(event.startTime).isSame(targetDate.add(index, "day"), "date")),
+      events: events.filter((event) => dayjs(event.startDate).isSame(targetDate.add(index, "day"), "date")),
       date: targetDate.add(index, "day"),
     };
     return acc;
@@ -43,7 +43,7 @@ const MonthlyCalendar = ({ startMonth, events, handleOpenDetail, handleOpenCreat
       ),
     };
 
-    const dayColumns: ITableColumn[] = Object.keys(DAYS_OF_WEEK).map((day, index) => ({
+    const dayColumns: ITableColumn[] = Object.values(DAYS_OF_WEEK).map((day, index) => ({
       title: <div className="tw-text-center tw-font-semibold tw-text-xs">{day.slice(0, 3)}</div>,
       dataIndex: day,
       key: day,

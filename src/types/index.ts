@@ -1,18 +1,18 @@
-import { DAYS_OF_WEEK } from "../constants";
+import { DAYS_OF_WEEK, EVENT_TYPES } from "../constants";
 
 // Types
-export type EventType = "info" | "success" | "warning" | "error" | "default";
-
 export type CalendarMode = "month" | "week";
+
+export type EventType = keyof typeof EVENT_TYPES;
 
 export type DaysOfWeekKeys = keyof typeof DAYS_OF_WEEK;
 
 // Interfaces
 export interface IEvent {
-  eventId: string;
+  id: string;
   title: string;
-  startTime: Date;
-  endTime: Date;
+  startDate: Date;
+  endDate: Date;
   type: EventType;
   description?: string;
 }

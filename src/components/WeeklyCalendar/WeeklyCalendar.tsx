@@ -18,15 +18,15 @@ interface IWeeklyCell {
 
 type EventsByDay = Record<DaysOfWeekKeys, IWeeklyCell>;
 
-const daysOfWeekKeys = Object.keys(DAYS_OF_WEEK) as DaysOfWeekKeys[];
+const daysOfWeekKeys = Object.values(DAYS_OF_WEEK);
 
 const getEventAllDay = (events: IEvent[], targetDate: Dayjs) =>
   daysOfWeekKeys.reduce((acc: EventsByDay, day, index) => {
     acc[day] = {
       events: events.filter(
         (event) =>
-          dayjs(event.startTime).isSame(targetDate.add(index, "day").startOf("day"), "hour") &&
-          dayjs(event.endTime).isSame(targetDate.add(index, "day").endOf("day"), "hour")
+          dayjs(event.startDate).isSame(targetDate.add(index, "day").startOf("day"), "hour") &&
+          dayjs(event.endDate).isSame(targetDate.add(index, "day").endOf("day"), "hour")
       ),
       date: targetDate.add(index, "day"),
     };
@@ -36,7 +36,7 @@ const getEventAllDay = (events: IEvent[], targetDate: Dayjs) =>
 const getEventsOfDay = (events: IEvent[], targetHour: Dayjs) =>
   daysOfWeekKeys.reduce((acc: EventsByDay, day, index) => {
     acc[day] = {
-      events: events.filter((event) => dayjs(event.startTime).isSame(targetHour.add(index, "day"), "hour")),
+      events: events.filter((event) => dayjs(event.startDate).isSame(targetHour.add(index, "day"), "hour")),
       date: targetHour.add(index, "day"),
     };
     return acc;
@@ -57,7 +57,7 @@ const WeeklyCalendar = ({ startWeek, events, handleOpenDetail, handleOpenCreate 
       render: (value: string) => <div className="tw-text-center tw-text-xs">{value}</div>,
     };
 
-    const dayColumns: ITableColumn[] = Object.keys(DAYS_OF_WEEK).map((day, index) => ({
+    const dayColumns: ITableColumn[] = Object.values(DAYS_OF_WEEK).map((day, index) => ({
       title: (
         <div className="tw-flex tw-flex-col tw-gap-y-0.5 tw-text-center tw-font-semibold tw-text-xs">
           <div>{day.slice(0, 3)}</div>
