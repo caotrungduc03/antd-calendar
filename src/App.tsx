@@ -6,10 +6,10 @@ import { IEvent } from "./types";
 
 const isEventOverlap = (newEvent: IEvent, existingEvents: IEvent[]): boolean => {
   return existingEvents.some((existingEvent) => {
-    const newStart = dayjs(newEvent.startTime);
-    const newEnd = dayjs(newEvent.endTime);
-    const existingStart = dayjs(existingEvent.startTime);
-    const existingEnd = dayjs(existingEvent.endTime);
+    const newStart = dayjs(newEvent.startDate);
+    const newEnd = dayjs(newEvent.endDate);
+    const existingStart = dayjs(existingEvent.startDate);
+    const existingEnd = dayjs(existingEvent.endDate);
 
     return newStart < existingEnd && newEnd > existingStart;
   });
@@ -27,16 +27,16 @@ const generateRandomEvents = (numberOfEvents: number): IEvent[] => {
     const randomMinuteStart = Math.floor(Math.random() * 60);
     const randomDurationHours = Math.floor(Math.random() * 4) + 1; // event duration between 1-4 hours
 
-    const startTime = randomDate.set("hour", randomHourStart).set("minute", randomMinuteStart).toDate();
-    const endTime = dayjs(startTime).add(randomDurationHours, "hour").toDate();
+    const startDate = randomDate.set("hour", randomHourStart).set("minute", randomMinuteStart).toDate();
+    const endDate = dayjs(startDate).add(randomDurationHours, "hour").toDate();
 
     const randomType = eventTypes[Math.floor(Math.random() * eventTypes.length)];
 
     const newEvent: IEvent = {
-      eventId: `${Date.now()}-${i}`, // Unique id
+      id: `${Date.now()}-${i}`, // Unique id
       title: `Random Event ${i + 1}`,
-      startTime,
-      endTime,
+      startDate,
+      endDate,
       type: randomType,
       description: "This is a random event",
     };

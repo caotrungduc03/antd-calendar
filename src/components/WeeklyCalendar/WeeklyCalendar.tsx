@@ -25,8 +25,8 @@ const getEventAllDay = (events: IEvent[], targetDate: Dayjs) =>
     acc[day] = {
       events: events.filter(
         (event) =>
-          dayjs(event.startTime).isSame(targetDate.add(index, "day").startOf("day"), "hour") &&
-          dayjs(event.endTime).isSame(targetDate.add(index, "day").endOf("day"), "hour")
+          dayjs(event.startDate).isSame(targetDate.add(index, "day").startOf("day"), "hour") &&
+          dayjs(event.endDate).isSame(targetDate.add(index, "day").endOf("day"), "hour")
       ),
       date: targetDate.add(index, "day"),
     };
@@ -36,7 +36,7 @@ const getEventAllDay = (events: IEvent[], targetDate: Dayjs) =>
 const getEventsOfDay = (events: IEvent[], targetHour: Dayjs) =>
   daysOfWeekKeys.reduce((acc: EventsByDay, day, index) => {
     acc[day] = {
-      events: events.filter((event) => dayjs(event.startTime).isSame(targetHour.add(index, "day"), "hour")),
+      events: events.filter((event) => dayjs(event.startDate).isSame(targetHour.add(index, "day"), "hour")),
       date: targetHour.add(index, "day"),
     };
     return acc;

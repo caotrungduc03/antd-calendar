@@ -23,7 +23,7 @@ const daysOfWeekKeys = Object.values(DAYS_OF_WEEK);
 const getEventsOfWeek = (events: IEvent[], targetDate: Dayjs): EventsByDay =>
   daysOfWeekKeys.reduce((acc: EventsByDay, day, index) => {
     acc[day] = {
-      events: events.filter((event) => dayjs(event.startTime).isSame(targetDate.add(index, "day"), "date")),
+      events: events.filter((event) => dayjs(event.startDate).isSame(targetDate.add(index, "day"), "date")),
       date: targetDate.add(index, "day"),
     };
     return acc;
