@@ -5,8 +5,8 @@ import { globSync } from "glob";
 import path, { resolve } from "path";
 import { fileURLToPath } from "url";
 import { defineConfig } from "vite";
+import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 import dts from "vite-plugin-dts";
-import { libInjectCss } from "vite-plugin-lib-inject-css";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -42,7 +42,7 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    libInjectCss(),
+    cssInjectedByJsPlugin(),
     dts({
       tsconfigPath: "./tsconfig.json",
     }),
