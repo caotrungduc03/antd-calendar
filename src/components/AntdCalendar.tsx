@@ -1,6 +1,7 @@
 import dayjs, { Dayjs } from "dayjs";
 import { useMemo, useState } from "react";
-import { CalendarMode, IEvent } from "../types";
+import { useEffectAfterMounted } from "../hooks/useEffectAfterMounted";
+import { CalendarMode, IEvent, INorm } from "../types";
 import "./AntdCalendar.css";
 import HeaderCalendar from "./HeaderCalendar/HeaderCalendar";
 import MonthlyCalendar from "./MonthlyCalendar/MonthlyCalendar";
@@ -8,21 +9,52 @@ import WeeklyCalendar from "./WeeklyCalendar/WeeklyCalendar";
 
 interface IAntdCalendarProps {
   events: IEvent[];
-  handleOpenDetail: (date: Date, events: IEvent[]) => void;
-  handleOpenCreate: (date: Date) => void;
+  norms?: INorm[];
+  teacherName?: string;
+  showTeacherName?: boolean;
+  showWeeklyNorm?: boolean;
+  onOpenDetail: (date: Date, events: IEvent[]) => void;
+  onOpenCreate: (date: Date) => void;
+  onRefetchAPI?: (startDate: Date, endDate: Date) => Promise<void>;
+  loading?: boolean;
 }
 
-const AntdCalendar = ({ events, handleOpenDetail, handleOpenCreate }: IAntdCalendarProps) => {
+const AntdCalendar = ({
+  events,
+  norms = [],
+  teacherName,
+  showTeacherName = true,
+  showWeeklyNorm = true,
+  onOpenDetail,
+  onOpenCreate,
+  onRefetchAPI,
+  loading,
+}: IAntdCalendarProps) => {
   const [currentDate, setCurrentDate] = useState<Dayjs>(dayjs());
-  const startWeek = useMemo(() => dayjs(currentDate).startOf("week").add(1, "day"), [currentDate]); // add 1 day because start of week is Sunday
-  const startMonth = useMemo(() => dayjs(currentDate).startOf("month"), [currentDate]);
   const [calendarMode, setCalendarMode] = useState<CalendarMode>("month");
+
+  const startDate = useMemo(
+    () => dayjs(currentDate).startOf(calendarMode).startOf("week").add(1, "day"),
+    [currentDate, calendarMode]
+  ); // add 1 day because start of week is Sunday
+
+  const endDate = useMemo(
+    () => dayjs(currentDate).endOf(calendarMode).endOf("week").add(1, "day"),
+    [currentDate, calendarMode]
+  ); // add 1 day because end of week is Saturday
+
+  useEffectAfterMounted(() => {
+    if (onRefetchAPI) {
+      onRefetchAPI(startDate.toDate(), endDate.toDate());
+    }
+  }, [startDate, endDate, onRefetchAPI]);
 
   return (
     <div className="antd-calendar">
       <div className="flex flex-col gap-y-6 p-8 bg-white">
         <HeaderCalendar
-          title="Cao Trung Đức"
+          title={teacherName}
+          showTeacherName={showTeacherName}
           currentDate={currentDate}
           setCurrentDate={setCurrentDate}
           calendarMode={calendarMode}
@@ -30,18 +62,27 @@ const AntdCalendar = ({ events, handleOpenDetail, handleOpenCreate }: IAntdCalen
         />
         {calendarMode === "month" && (
           <MonthlyCalendar
-            startMonth={startMonth}
+            currentDate={currentDate}
+            startDate={startDate}
+            endDate={endDate}
             events={events}
-            handleOpenDetail={handleOpenDetail}
-            handleOpenCreate={handleOpenCreate}
+            norms={norms}
+            showWeeklyNorm={showWeeklyNorm}
+            onOpenDetail={onOpenDetail}
+            onOpenCreate={onOpenCreate}
+            loading={loading}
           />
         )}
         {calendarMode === "week" && (
           <WeeklyCalendar
-            startWeek={startWeek}
+            startDate={startDate}
+            endDate={endDate}
             events={events}
-            handleOpenDetail={handleOpenDetail}
-            handleOpenCreate={handleOpenCreate}
+            norms={norms}
+            showWeeklyNorm={showWeeklyNorm}
+            onOpenDetail={onOpenDetail}
+            onOpenCreate={onOpenCreate}
+            loading={loading}
           />
         )}
       </div>

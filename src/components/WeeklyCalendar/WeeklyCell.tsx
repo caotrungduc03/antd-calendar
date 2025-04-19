@@ -1,29 +1,43 @@
 import dayjs, { Dayjs } from "dayjs";
-import { MouseEvent } from "react";
+import { MouseEvent, useMemo } from "react";
+import { EventType } from "../../constants";
 import { IEvent } from "../../types";
 import WeeklyEvent from "./WeeklyEvent";
 
 interface IWeeklyCellProps {
   events: IEvent[];
   date: Dayjs;
-  handleOpenDetail: (date: Date, events: IEvent[]) => void;
-  handleOpenCreate: (date: Date) => void;
+  onOpenDetail: (date: Date, events: IEvent[]) => void;
+  onOpenCreate: (date: Date) => void;
+  onEventDetail?: (event: IEvent) => void;
 }
 
-const WeeklyCell = ({ events, date, handleOpenDetail, handleOpenCreate }: IWeeklyCellProps) => {
+const WeeklyCell = ({ events, date, onOpenDetail, onOpenCreate, onEventDetail }: IWeeklyCellProps) => {
   const isToday = dayjs().isSame(date, "day");
 
-  const handleClick = (e: MouseEvent<HTMLDivElement>) => {
+  const handleOpenCreateModal = (e: MouseEvent<HTMLDivElement>) => {
     if (e.target !== e.currentTarget) return;
 
-    handleOpenCreate(dayjs(date).toDate());
+    onOpenCreate(dayjs(date).toDate());
   };
 
+  events.sort((a, b) => (a.type === EventType.BUSY && b.type !== EventType.BUSY ? 1 : -1));
+
+  const renderWeeklyEvent = useMemo(() => {
+    return events.map((event, index) => (
+      <WeeklyEvent
+        key={index}
+        event={event}
+        onOpenDetail={onOpenDetail}
+        onEventDetail={onEventDetail}
+        zIndex={index + 1}
+      />
+    ));
+  }, [events]);
+
   return (
-    <div className={`h-[60px] w-full ${isToday ? "bg-info/10" : "bg-white"}`} onClick={handleClick}>
-      {events.map((event, index) => (
-        <WeeklyEvent key={index} event={event} handleOpenDetail={handleOpenDetail} />
-      ))}
+    <div className={`weekly-calendar__cell ${isToday ? "bg-info/10" : "bg-white"}`} onClick={handleOpenCreateModal}>
+      {renderWeeklyEvent}
     </div>
   );
 };

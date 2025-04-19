@@ -1,35 +1,83 @@
+import { BookOutlined, CalendarOutlined, CheckCircleOutlined, StarOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
-import { MINUTES_PER_HOUR } from "../../constants";
+import {
+  BORDER_WEEKLY_CELL,
+  EventType,
+  MIN_HEIGHT_EVENT,
+  MIN_HEIGHT_HIDE_ALL,
+  MIN_HEIGHT_HIDE_DETAILS,
+  MINUTES_PER_HOUR,
+  TIME_FORMAT,
+} from "../../constants";
 import { IEvent } from "../../types";
-import { convertType } from "../../utils";
+import { convertType, customDateFormat } from "../../utils";
 
 interface IWeeklyEventProps {
   event: IEvent;
-  handleOpenDetail: (date: Date, events: IEvent[]) => void;
+  onOpenDetail: (date: Date, events: IEvent[]) => void;
+  onEventDetail?: (event: IEvent) => void;
+  zIndex: number;
 }
 
-const calculateBoxSize = (startTime: Date, endTime: Date) => {
+const calculateBoxSize = (startTime: Date, endTime: Date, isAllDay?: boolean) => {
+  if (isAllDay) {
+    return {
+      top: 10,
+      height: 50,
+    };
+  }
+
   const minutes = dayjs(startTime).minute();
-  const diffMinutes = dayjs(endTime).diff(dayjs(startTime), "minute", true);
+  const diffMinutes = dayjs(endTime).diff(startTime, "minute", true);
+
+  const top = Math.floor((minutes / MINUTES_PER_HOUR) * 100);
+  const height = Math.floor((diffMinutes / MINUTES_PER_HOUR) * 100);
+  const border = Math.floor(((top + height) / MINUTES_PER_HOUR) * BORDER_WEEKLY_CELL);
 
   return {
-    top: Math.floor((minutes / MINUTES_PER_HOUR) * 100),
-    height: Math.floor((diffMinutes / MINUTES_PER_HOUR) * 100),
+    top,
+    height: height + border,
   };
 };
 
-const WeeklyEvent = ({ event, handleOpenDetail }: IWeeklyEventProps) => {
-  const { top, height } = calculateBoxSize(event.startDate, event.endDate);
+const getIconEvent = {
+  [EventType.TEACHING]: <BookOutlined />,
+  [EventType.BUSY]: <CalendarOutlined />,
+  [EventType.HOLIDAY]: <StarOutlined />,
+  [EventType.OTHER]: <CheckCircleOutlined />,
+} as const;
+
+const WeeklyEvent = ({ event, onOpenDetail, onEventDetail, zIndex }: IWeeklyEventProps) => {
+  const { top, height } = calculateBoxSize(event.startDate, event.endDate, event.isAllDay);
+
+  const isMinHeight = height < MIN_HEIGHT_EVENT;
+
+  const formattedDate =
+    customDateFormat(event.startDate, TIME_FORMAT) + " - " + customDateFormat(event.endDate, TIME_FORMAT);
+
   return (
     <div
-      className={`absolute z-10 top-[${top}%] left-[5%] w-[85%] h-[${height}%] border-l-2 border-solid rounded-sm p-1 event-${
-        convertType[event.type]
-      } cursor-pointer`}
-      onClick={() => handleOpenDetail(dayjs(event.startDate).toDate(), [event])}
+      className={`event-${convertType[event.type]} ${isMinHeight ? "event--min-height" : ""}`}
+      onClick={() => {
+        onOpenDetail(dayjs(event.startDate).toDate(), [event]);
+        onEventDetail && onEventDetail(event);
+      }}
+      style={{
+        top: `${top}%`,
+        height: `${Math.max(height, MIN_HEIGHT_EVENT)}%`,
+        zIndex,
+      }}
     >
-      <div className={`text-sm font-normal line-clamp-${Math.min(height / 100, 6)}`}>{event.title}</div>
-      <div className="text-sm font-normal">
-        {dayjs(event.startDate).format("HH:mm")} - {dayjs(event.endDate).format("HH:mm")}
+      <div className={`weekly-event ${height <= MIN_HEIGHT_HIDE_ALL ? "weekly-event--collapse" : ""}`}>
+        <div className="flex">{getIconEvent[event.type]}</div>
+        <div className={height <= MIN_HEIGHT_HIDE_DETAILS ? "weekly-event--collapse" : ""}>
+          <div className="weekly-event__title">
+            <div title={event.title}>{event.title}</div>
+          </div>
+          <div className="weekly-event__date">
+            <div title={formattedDate}>{formattedDate}</div>
+          </div>
+        </div>
       </div>
     </div>
   );

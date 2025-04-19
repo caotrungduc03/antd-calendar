@@ -8,7 +8,8 @@ import { customDateFormat } from "../../utils";
 interface IHeaderCalendarProps {
   currentDate: Dayjs;
   setCurrentDate: Dispatch<SetStateAction<Dayjs>>;
-  title: string;
+  title?: string;
+  showTeacherName?: boolean;
   calendarMode: CalendarMode;
   setCalendarMode: Dispatch<SetStateAction<CalendarMode>>;
 }
@@ -17,11 +18,17 @@ const HeaderCalendar = ({
   currentDate,
   setCurrentDate,
   title,
+  showTeacherName,
   calendarMode,
   setCalendarMode,
 }: IHeaderCalendarProps) => {
   const handleChangeDate = (date: Dayjs) => {
     setCurrentDate(date);
+  };
+
+  const handleChangeMode = (mode: CalendarMode) => {
+    setCalendarMode(mode);
+    setCurrentDate(dayjs());
   };
 
   return (
@@ -36,7 +43,7 @@ const HeaderCalendar = ({
         <DatePicker
           picker={calendarMode}
           onChange={handleChangeDate}
-          format={customDateFormat}
+          format={(value) => customDateFormat(value, "MMMM, YYYY")}
           value={currentDate}
           allowClear={false}
           suffixIcon={null}
@@ -49,22 +56,23 @@ const HeaderCalendar = ({
           onClick={() => handleChangeDate(currentDate.add(1, calendarMode))}
         />
       </div>
-      <div className="text-[18px] font-semibold text-colorText">{title}</div>
+      {showTeacherName && title && <div className="text-[18px] font-semibold text-colorText">{title}</div>}
       <div className="flex items-center gap-x-4">
         <Button type="default" size="large" onClick={() => handleChangeDate(dayjs())}>
           Today
         </Button>
+        <div className="h-5 w-px bg-gray-200"></div>
         <Button
           type={calendarMode === "month" ? "primary" : "default"}
           size="large"
-          onClick={() => setCalendarMode("month")}
+          onClick={() => handleChangeMode("month")}
         >
           Month
         </Button>
         <Button
           type={calendarMode === "week" ? "primary" : "default"}
           size="large"
-          onClick={() => setCalendarMode("week")}
+          onClick={() => handleChangeMode("week")}
         >
           Week
         </Button>

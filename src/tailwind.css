@@ -70,3 +70,53 @@
 .weekly-calendar .ant-table-tbody .ant-table-cell {
   @apply border-[0.5px];
 }
+
+.weekly-calendar tbody td {
+  @apply !border-[0.5px] !border-solid border-[#DBDFE9];
+}
+
+.weekly-calendar tbody td:first-child > div {
+  @apply text-center text-xs;
+}
+
+.weekly-calendar__title {
+  @apply flex flex-col gap-y-0.5 text-center font-semibold text-xs;
+}
+
+.weekly-calendar thead th:first-child > .weekly-calendar__title {
+  @apply w-[100px];
+}
+
+.weekly-calendar__cell {
+  @apply h-[60px] w-full;
+}
+
+.weekly-calendar__cell > div {
+  @apply absolute z-10 left-[5%] w-[90%] !border-l-2 !border-solid rounded-sm p-3 cursor-pointer;
+}
+
+.weekly-calendar__cell > div.event--min-height {
+  @apply py-1;
+}
+
+.weekly-event {
+  @apply flex flex-col gap-y-2;
+}
+
+.weekly-event__title {
+  @apply text-sm font-semibold;
+}
+
+.weekly-event__date {
+  @apply text-sm font-normal;
+}
+
+.weekly-event--collapse,
+.weekly-event--collapse {
+  @apply flex flex-row gap-x-2 items-center;
+}
+
+.weekly-event--collapse > .weekly-event__title,
+.weekly-event--collapse > .weekly-event__date {
+  @apply line-clamp-1;
+}
