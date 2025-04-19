@@ -32,19 +32,19 @@ const getEventsOfWeek = (events: IEvent[], targetDate: Dayjs): EventsByDay =>
 const MonthlyCalendar = ({ startMonth, events, handleOpenDetail, handleOpenCreate }: IMonthlyCalendarProps) => {
   const getTableColumns = () => {
     const weeklyNormColumn: ITableColumn = {
-      title: <div className="tw-text-center tw-font-semibold tw-text-xs tw-w-[100px]">Weekly Norm</div>,
+      title: <div className="text-center font-semibold text-sm w-[100px]">Weekly Norm</div>,
       dataIndex: "weeklyNorm",
       key: "weeklyNorm",
       width: 1,
       render: (value: string) => (
-        <div className="tw-flex tw-flex-col tw-border-t-0.25 tw-border-solid tw-border-gray-4">
-          <div className="tw-pt-2 tw-px-2">{value}</div>
+        <div className="flex flex-col border-t-0.25 border-solid border-gray-200">
+          <div className="pt-2 px-2">{value}</div>
         </div>
       ),
     };
 
     const dayColumns: ITableColumn[] = Object.values(DAYS_OF_WEEK).map((day, index) => ({
-      title: <div className="tw-text-center tw-font-semibold tw-text-xs">{day.slice(0, 3)}</div>,
+      title: <div className="text-center font-semibold text-sm">{day.slice(0, 3)}</div>,
       dataIndex: day,
       key: day,
       width: "14%",
@@ -111,7 +111,7 @@ const MonthlyCalendar = ({ startMonth, events, handleOpenDetail, handleOpenCreat
       dataSource={getDataSource()}
       pagination={false}
       rowHoverable={false}
-      className="monthly-calendar tw-overflow-hidden"
+      className="monthly-calendar overflow-hidden"
     />
   );
 };

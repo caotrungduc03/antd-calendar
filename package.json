@@ -16,7 +16,6 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "css": "npx tailwindcss -i ./src/tailwind.css -o ./src/components/AntdCalendar.css",
     "css:dev": "npx tailwindcss -i ./src/tailwind.css -o ./src/components/AntdCalendar.css --watch"
   },
   "dependencies": {

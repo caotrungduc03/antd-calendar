@@ -22,13 +22,13 @@ const WeeklyEvent = ({ event, handleOpenDetail }: IWeeklyEventProps) => {
   const { top, height } = calculateBoxSize(event.startDate, event.endDate);
   return (
     <div
-      className={`tw-absolute tw-z-10 top-[${top}%] tw-left-[5%] tw-w-[85%] tw-h-[${height}%] tw-border-l-2 tw-border-solid tw-rounded-sm tw-p-1 event-${
+      className={`absolute z-10 top-[${top}%] left-[5%] w-[85%] h-[${height}%] border-l-2 border-solid rounded-sm p-1 event-${
         convertType[event.type]
-      } tw-cursor-pointer`}
+      } cursor-pointer`}
       onClick={() => handleOpenDetail(dayjs(event.startDate).toDate(), [event])}
     >
-      <div className={`tw-text-sm tw-font-normal tw-line-clamp-${Math.min(height / 100, 6)}`}>{event.title}</div>
-      <div className="tw-text-sm tw-font-normal">
+      <div className={`text-sm font-normal line-clamp-${Math.min(height / 100, 6)}`}>{event.title}</div>
+      <div className="text-sm font-normal">
         {dayjs(event.startDate).format("HH:mm")} - {dayjs(event.endDate).format("HH:mm")}
       </div>
     </div>

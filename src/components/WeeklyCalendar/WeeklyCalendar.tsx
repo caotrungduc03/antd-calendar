@@ -46,7 +46,7 @@ const WeeklyCalendar = ({ startWeek, events, handleOpenDetail, handleOpenCreate 
   const getTableColumns = () => {
     const hourColumn: ITableColumn = {
       title: (
-        <div className="tw-flex tw-flex-col tw-gap-y-0.5 tw-w-[100px] tw-text-center tw-font-semibold tw-text-xs">
+        <div className="flex flex-col gap-y-0.5 w-[100px] text-center font-semibold text-sm">
           <div>Weekly Norm</div>
           <div>5/7</div>
         </div>
@@ -54,12 +54,12 @@ const WeeklyCalendar = ({ startWeek, events, handleOpenDetail, handleOpenCreate 
       dataIndex: "hour",
       key: "hour",
       width: 1,
-      render: (value: string) => <div className="tw-text-center tw-text-xs">{value}</div>,
+      render: (value: string) => <div className="text-center text-xs">{value}</div>,
     };
 
     const dayColumns: ITableColumn[] = Object.values(DAYS_OF_WEEK).map((day, index) => ({
       title: (
-        <div className="tw-flex tw-flex-col tw-gap-y-0.5 tw-text-center tw-font-semibold tw-text-xs">
+        <div className="flex flex-col gap-y-0.5 text-center font-semibold text-sm">
           <div>{day.slice(0, 3)}</div>
           <div>{dayjs(startWeek).add(index, "day").format("DD/MM")}</div>
         </div>
@@ -109,7 +109,7 @@ const WeeklyCalendar = ({ startWeek, events, handleOpenDetail, handleOpenCreate 
       dataSource={getDataSource()}
       pagination={false}
       rowHoverable={false}
-      className="weekly-calendar tw-overflow-hidden"
+      className="weekly-calendar overflow-hidden"
     />
   );
 };

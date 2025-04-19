@@ -20,7 +20,7 @@ const WeeklyCell = ({ events, date, handleOpenDetail, handleOpenCreate }: IWeekl
   };
 
   return (
-    <div className={`tw-h-[60px] tw-w-full ${isToday ? "tw-bg-info/10" : "tw-bg-white"}`} onClick={handleClick}>
+    <div className={`h-[60px] w-full ${isToday ? "bg-info/10" : "bg-white"}`} onClick={handleClick}>
       {events.map((event, index) => (
         <WeeklyEvent key={index} event={event} handleOpenDetail={handleOpenDetail} />
       ))}
