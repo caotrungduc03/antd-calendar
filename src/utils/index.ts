@@ -6,39 +6,9 @@ export const customDateFormat = (value: Dayjs | Date, formatStr: string) => dayj
 
 export const convertType: Record<EventType, string> = {
   [EventType.TEACHING]: "info",
-  [EventType.BUSY]: "warning",
-  [EventType.HOLIDAY]: "error",
+  [EventType.BUSY]: "error",
+  [EventType.HOLIDAY]: "warning",
   [EventType.OTHER]: "success",
-};
-
-export const splitEventsIntoDays = (events: IEvent[]): IEvent[] => {
-  const result: IEvent[] = [];
-
-  events.forEach((event) => {
-    const start = dayjs(event.startDate);
-    const end = dayjs(event.endDate);
-    const diffDays = end.diff(start, "day");
-
-    if (diffDays === 0) {
-      result.push(event);
-    } else {
-      // Split the event into multiple day events
-      for (let i = 0; i <= diffDays; i++) {
-        const currentDate = start.add(i, "day");
-
-        const newEvent: IEvent = {
-          ...event,
-          id: `${event.id}-${i}`,
-          startDate: i === 0 ? event.startDate : new Date(currentDate.format("YYYY-MM-DD 00:00:00")),
-          endDate: i === diffDays ? event.endDate : new Date(currentDate.format("YYYY-MM-DD 23:59:59")),
-        };
-
-        result.push(newEvent);
-      }
-    }
-  });
-
-  return result;
 };
 
 export const checkIsAllday = (startDate: Dayjs, endDate: Dayjs) => {

@@ -17,7 +17,6 @@ export interface IEvent {
   startDate: Date;
   endDate: Date;
   type: EventType;
-  isRepeat: boolean;
   description?: string;
   classroomName?: string;
   classroomAddress?: string;
