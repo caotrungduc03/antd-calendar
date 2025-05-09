@@ -6,47 +6,40 @@ import MonthlyEvent from "./MonthlyEvent";
 interface IMonthlyCellProps {
   events: IEvent[];
   date: Dayjs;
-  startMonth: Dayjs;
-  handleOpenDetail: (date: Date, events: IEvent[]) => void;
-  handleOpenCreate: (date: Date) => void;
+  currentDate: Dayjs;
+  onOpenDetail: (date: Date, events: IEvent[]) => void;
+  onOpenCreate: (date: Date) => void;
 }
 
-const MonthlyCell = ({ startMonth, events, date, handleOpenDetail, handleOpenCreate }: IMonthlyCellProps) => {
+const MonthlyCell = ({ currentDate, events, date, onOpenDetail, onOpenCreate }: IMonthlyCellProps) => {
   const hasMore = events.length > 2;
-  const isSameMonth = startMonth.isSame(date, "month");
+  const isSameMonth = currentDate.isSame(date, "month");
   const isToday = dayjs().isSame(date, "day");
 
-  const handleClick = (e: MouseEvent<HTMLDivElement>) => {
+  const handleOpenCreateModal = (e: MouseEvent<HTMLDivElement>) => {
     if (e.target !== e.currentTarget) return;
 
-    handleOpenCreate(dayjs(date).startOf("day").add(dayjs().hour(), "hour").toDate());
+    onOpenCreate(dayjs(date).hour(dayjs().hour()).minute(dayjs().minute()).toDate());
   };
 
   return (
     <div
-      className={`tw-flex tw-flex-col tw-justify-between tw-border-t-0.25 tw-border-solid ${
-        isToday ? "tw-border-info" : "tw-border-gray-4"
-      } ${isSameMonth ? "tw-bg-white" : "tw-bg-button tw-rounded"}`}
-      onClick={handleClick}
+      className={`flex flex-col justify-between border-t-0.25 border-solid ${
+        isToday ? "border-info !bg-info/10" : "border-gray-200"
+      } ${isSameMonth ? "bg-white" : "bg-gray-50"}`}
+      onClick={handleOpenCreateModal}
     >
-      <div
-        className={`tw-pt-2 tw-px-2 tw-text-sm tw-font-normal ${
-          isSameMonth ? "tw-text-black" : "tw-text-[#8e94a0]"
-        } tw-line-clamp-1`}
-      >
+      <div className={`pt-2 px-2 text-sm font-normal ${isSameMonth ? "text-black" : "text-gray-500"}`}>
         {date.format("DD")}
       </div>
-      <ul
-        className="tw-flex tw-flex-col tw-gap-y-1 tw-cursor-pointer"
-        onClick={() => handleOpenDetail(date.toDate(), events)}
-      >
+      <ul className="flex flex-col gap-y-1 cursor-pointer" onClick={() => onOpenDetail(date.toDate(), events)}>
         {events.slice(0, 2).map((event, index) => (
           <MonthlyEvent key={index} event={event} isSameMonth={isSameMonth} />
         ))}
         {hasMore && (
-          <li className="tw-text-[13px] tw-font-medium tw-text-info tw-cursor-pointer">
+          <div className={`text-[13px] font-medium ${isSameMonth ? "text-info" : "text-gray-500"}`}>
             +{Math.max(events.length - 2, 0)} More
-          </li>
+          </div>
         )}
       </ul>
     </div>

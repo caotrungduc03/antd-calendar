@@ -1,11 +1,14 @@
-import { DAYS_OF_WEEK, EVENT_TYPES } from "../constants";
+import { Dayjs } from "dayjs";
+import { DaysOfWeek, EventType } from "../constants";
 
 // Types
+export type ButtonType = "button" | "submit" | "reset";
+
+export type ButtonColor = "primary" | "default";
+
 export type CalendarMode = "month" | "week";
 
-export type EventType = keyof typeof EVENT_TYPES;
-
-export type DaysOfWeekKeys = keyof typeof DAYS_OF_WEEK;
+export type EventsByDay = Record<DaysOfWeek, ICell>;
 
 // Interfaces
 export interface IEvent {
@@ -15,12 +18,34 @@ export interface IEvent {
   endDate: Date;
   type: EventType;
   description?: string;
+  classroomName?: string;
+  classroomAddress?: string;
+  meetingLink?: string;
+  isAllDay?: boolean;
 }
 
-export type ITableColumn = {
-  title: string | React.ReactNode;
+export interface ITableColumn {
+  title: React.ReactNode;
   dataIndex: string;
   key: string;
   width?: number | string;
+  minWidth?: number;
   render?: (value: any) => React.ReactNode;
-};
+}
+
+export interface ICell {
+  events: IEvent[];
+  date: Dayjs;
+}
+
+export interface INorm {
+  id: string;
+  startDate: Date;
+  endDate: Date;
+  maxShift: number;
+}
+
+export interface INormOfWeek {
+  normOfWeek: number;
+  totalNorm: number;
+}

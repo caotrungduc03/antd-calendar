@@ -1,6 +1,6 @@
-import dayjs from "dayjs";
+import { TIME_FORMAT } from "../../constants";
 import { IEvent } from "../../types";
-import { convertType } from "../../utils";
+import { convertType, customDateFormat } from "../../utils";
 
 interface IMonthlyEventProps {
   event: IEvent;
@@ -8,12 +8,13 @@ interface IMonthlyEventProps {
 }
 
 const MonthlyEvent = ({ event, isSameMonth }: IMonthlyEventProps) => {
+  const formattedDate =
+    customDateFormat(event.startDate, TIME_FORMAT) + " - " + customDateFormat(event.endDate, TIME_FORMAT);
+
   return (
-    <li className={`tw-px-2 tw-py-0.5 tw-rounded event-${isSameMonth ? convertType[event.type] : "default"}`}>
-      <div className="tw-text-[13px] tw-font-medium tw-line-clamp-1">{event.title}</div>
-      <div className="tw-text-[13px] tw-font-normal">
-        {dayjs(event.startDate).format("HH:mm")} - {dayjs(event.endDate).format("HH:mm")}
-      </div>
+    <li className={`px-2 py-0.5 rounded event-${isSameMonth ? convertType[event.type] : "default"}`}>
+      <div className="text-[13px] font-medium line-clamp-1">{event.title}</div>
+      <div className="text-[13px] font-normal line-clamp-1">{formattedDate}</div>
     </li>
   );
 };

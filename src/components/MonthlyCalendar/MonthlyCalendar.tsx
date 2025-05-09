@@ -1,79 +1,88 @@
 import { Table } from "antd";
+import clsx from "clsx";
 import dayjs, { Dayjs } from "dayjs";
-import { DAYS_OF_WEEK, START_OF_WEEK } from "../../constants";
-import { DaysOfWeekKeys, IEvent, ITableColumn } from "../../types";
+import { DaysOfWeek } from "../../constants";
+import { EventsByDay, ICell, IEvent, INorm, INormOfWeek, ITableColumn } from "../../types";
+import { calculateNormOfWeek, daysOfWeekKeys } from "../../utils";
 import MonthlyCell from "./MonthlyCell";
 
 interface IMonthlyCalendarProps {
-  startMonth: Dayjs;
+  currentDate: Dayjs;
+  startDate: Dayjs;
+  endDate: Dayjs;
   events: IEvent[];
-  handleOpenDetail: (date: Date, events: IEvent[]) => void;
-  handleOpenCreate: (date: Date) => void;
+  norms: INorm[];
+  showWeeklyNorm: boolean;
+  onOpenDetail: (date: Date, events: IEvent[]) => void;
+  onOpenCreate: (date: Date) => void;
+  loading?: boolean;
 }
-
-interface IMonthlyCell {
-  events: IEvent[];
-  date: Dayjs;
-}
-
-type EventsByDay = Record<DaysOfWeekKeys, IMonthlyCell>;
-
-const daysOfWeekKeys = Object.values(DAYS_OF_WEEK);
 
 const getEventsOfWeek = (events: IEvent[], targetDate: Dayjs): EventsByDay =>
   daysOfWeekKeys.reduce((acc: EventsByDay, day, index) => {
+    const currentDate = targetDate.add(index, "day");
+
     acc[day] = {
-      events: events.filter((event) => dayjs(event.startDate).isSame(targetDate.add(index, "day"), "date")),
-      date: targetDate.add(index, "day"),
+      events: events.filter((event) => dayjs(event.startDate).isSame(currentDate, "date")),
+      date: currentDate,
     };
     return acc;
   }, {} as EventsByDay);
 
-const MonthlyCalendar = ({ startMonth, events, handleOpenDetail, handleOpenCreate }: IMonthlyCalendarProps) => {
+const MonthlyCalendar = ({
+  currentDate,
+  startDate,
+  endDate,
+  events,
+  norms,
+  showWeeklyNorm,
+  onOpenDetail,
+  onOpenCreate,
+  loading,
+}: IMonthlyCalendarProps) => {
   const getTableColumns = () => {
     const weeklyNormColumn: ITableColumn = {
-      title: <div className="tw-text-center tw-font-semibold tw-text-xs tw-w-[100px]">Weekly Norm</div>,
-      dataIndex: "weeklyNorm",
-      key: "weeklyNorm",
-      width: 1,
-      render: (value: string) => (
-        <div className="tw-flex tw-flex-col tw-border-t-0.25 tw-border-solid tw-border-gray-4">
-          <div className="tw-pt-2 tw-px-2">{value}</div>
-        </div>
-      ),
+      title: <div className="text-center font-semibold text-sm weekly-norm-title">Weekly Norm</div>,
+      dataIndex: "norm",
+      key: "norm",
+      minWidth: 100,
+      render: (value: INormOfWeek) => {
+        const { normOfWeek, totalNorm } = value;
+        return (
+          <div className="weekly-norm-cell">
+            <div className={clsx("weekly-norm-value", normOfWeek > totalNorm && "text-error")}>
+              {`${normOfWeek}/${totalNorm}`}
+            </div>
+          </div>
+        );
+      },
     };
 
-    const dayColumns: ITableColumn[] = Object.values(DAYS_OF_WEEK).map((day, index) => ({
-      title: <div className="tw-text-center tw-font-semibold tw-text-xs">{day.slice(0, 3)}</div>,
+    const dayColumns: ITableColumn[] = Object.values(DaysOfWeek).map((day, index) => ({
+      title: <div className="text-center font-semibold text-sm">{day.slice(0, 3)}</div>,
       dataIndex: day,
       key: day,
       width: "14%",
-      render: (value: IMonthlyCell) => (
+      render: (value: ICell) => (
         <MonthlyCell
           key={index}
           events={value.events}
           date={value.date}
-          startMonth={startMonth}
-          handleOpenDetail={handleOpenDetail}
-          handleOpenCreate={handleOpenCreate}
+          currentDate={currentDate}
+          onOpenDetail={onOpenDetail}
+          onOpenCreate={onOpenCreate}
         />
       ),
     }));
 
-    return [weeklyNormColumn, ...dayColumns];
+    return showWeeklyNorm ? [weeklyNormColumn, ...dayColumns] : dayColumns;
   };
 
   const getWeeksOfFullMonth = () => {
     const weeks: Dayjs[] = [];
-    let targetDate = startMonth.clone();
+    let targetDate = startDate.clone();
 
-    if (targetDate.format("dddd") !== START_OF_WEEK) {
-      targetDate = dayjs(startMonth).startOf("week");
-      weeks.push(targetDate);
-      targetDate = targetDate.add(1, "week");
-    }
-
-    while (startMonth.isSame(targetDate, "month")) {
+    while (targetDate.isBefore(endDate)) {
       weeks.push(targetDate);
       targetDate = targetDate.add(1, "week");
     }
@@ -81,22 +90,27 @@ const MonthlyCalendar = ({ startMonth, events, handleOpenDetail, handleOpenCreat
     return weeks;
   };
 
-  const getDataSource = () => {
+  const getTableData = () => {
     const weeks = getWeeksOfFullMonth();
 
     const data = weeks.map((week, index) => {
       const eventsOfWeek = getEventsOfWeek(events, week);
 
-      let count = 0;
-      Object.entries(eventsOfWeek).forEach(([_key, value]: [any, any]) => {
-        if (Array.isArray(value.events) && value.events.length > 0) {
-          count++;
-        }
-      });
+      if (!showWeeklyNorm) {
+        return {
+          id: index,
+          ...eventsOfWeek,
+        };
+      }
 
       return {
         id: index,
-        weeklyNorm: `${count}/7`,
+        norm: calculateNormOfWeek(
+          norms,
+          events,
+          week,
+          week.endOf("week").add(1, "day") // add 1 day because end of week is Saturday
+        ),
         ...eventsOfWeek,
       };
     });
@@ -108,10 +122,11 @@ const MonthlyCalendar = ({ startMonth, events, handleOpenDetail, handleOpenCreat
     <Table
       rowKey={(record) => record.id}
       columns={getTableColumns()}
-      dataSource={getDataSource()}
+      dataSource={getTableData()}
       pagination={false}
       rowHoverable={false}
-      className="monthly-calendar tw-overflow-hidden"
+      className="monthly-calendar overflow-hidden"
+      loading={loading}
     />
   );
 };

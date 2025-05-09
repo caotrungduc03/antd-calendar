@@ -1,80 +1,122 @@
 @tailwind utilities;
 
 .antd-calendar * {
-  @apply tw-box-border;
+  @apply box-border;
 }
 
 .antd-calendar button,
 .antd-calendar div {
-  @apply tw-border-0 tw-border-none;
+  @apply border-0 border-none;
 }
 
 .antd-calendar ul {
-  @apply tw-m-0 tw-p-0 tw-list-none;
+  @apply m-0 p-0 list-none;
 }
 
 .antd-calendar table {
-  @apply tw-border-collapse;
-}
-
-.antd-calendar .btn-default {
-  @apply tw-bg-button tw-text-gray-2;
-}
-
-.antd-calendar .btn-primary {
-  @apply tw-border-primary tw-bg-primary tw-text-white;
+  @apply border-collapse;
 }
 
 .antd-calendar .event-info {
-  @apply tw-border-info tw-bg-info/5 tw-text-info;
+  @apply border-info bg-info/5 text-info;
 }
 
 .antd-calendar .event-warning {
-  @apply tw-border-warning tw-bg-warning/5 tw-text-warning;
+  @apply border-warning bg-warning/5 text-warning;
 }
 
 .antd-calendar .event-success {
-  @apply tw-border-success tw-bg-success/5 tw-text-success;
+  @apply border-success bg-success/5 text-success;
 }
 
 .antd-calendar .event-error {
-  @apply tw-border-error tw-bg-error/5 tw-text-error;
+  @apply border-error bg-error/5 text-error;
 }
 
 .antd-calendar .event-default {
-  @apply tw-bg-secondary tw-text-gray-2;
+  @apply bg-gray-100 text-gray-500;
 }
 
 .antd-calendar .ant-table-thead .ant-table-cell,
 .antd-calendar .ant-table-tbody .ant-table-cell {
-  @apply tw-border-none tw-bg-transparent before:!tw-w-0 tw-p-0;
+  @apply border-none bg-transparent before:!w-0 p-0;
 }
 
 .antd-calendar .ant-picker input {
-  @apply tw-w-[150px] !tw-text-lg !tw-font-semibold !tw-text-black tw-cursor-pointer;
+  @apply w-[150px] !text-lg !font-semibold !text-black cursor-pointer;
 }
 
 .monthly-calendar .ant-table-tbody .ant-table-cell > div {
-  @apply tw-mx-1 tw-px-2;
+  @apply mx-1 px-2;
 }
 
 .monthly-calendar .ant-table-thead .ant-table-cell > div,
 .weekly-calendar .ant-table-thead .ant-table-cell > div {
-  @apply tw-py-3;
+  @apply py-3;
 }
 
 .monthly-calendar .ant-table-tbody .ant-table-cell > div {
-  @apply tw-h-[150px] tw-pb-1;
+  @apply h-[150px] pb-1;
 }
 
 .weekly-calendar table {
-  @apply tw-border-0;
+  @apply border-0;
 }
 
 .weekly-calendar .ant-table-tbody .ant-table-cell {
-  @apply tw-border-solid tw-border-[#DBDFE9];
+  @apply border-solid border-gray-200;
 }
 
 .weekly-calendar .ant-table-tbody .ant-table-cell {
-  @apply tw-border-[0.5px];
+  @apply border-[0.5px];
+}
+
+.weekly-calendar tbody td {
+  @apply !border-[0.5px] !border-solid border-[#DBDFE9];
+}
+
+.weekly-calendar tbody td:first-child > div {
+  @apply text-center text-xs;
+}
+
+.weekly-calendar__title {
+  @apply flex flex-col gap-y-0.5 text-center font-semibold text-xs;
+}
+
+.weekly-calendar thead th:first-child > .weekly-calendar__title {
+  @apply w-[100px];
+}
+
+.weekly-calendar__cell {
+  @apply h-[60px] w-full;
+}
+
+.weekly-calendar__cell > div {
+  @apply absolute z-10 left-[5%] w-[90%] !border-l-2 !border-solid rounded-sm p-3 cursor-pointer;
+}
+
+.weekly-calendar__cell > div.event--min-height {
+  @apply py-1;
+}
+
+.weekly-event {
+  @apply flex flex-col gap-y-2;
+}
+
+.weekly-event__title {
+  @apply text-sm font-semibold;
+}
+
+.weekly-event__date {
+  @apply text-sm font-normal;
+}
+
+.weekly-event--collapse,
+.weekly-event--collapse {
+  @apply flex flex-row gap-x-2 items-center;
+}
+
+.weekly-event--collapse > .weekly-event__title,
+.weekly-event--collapse > .weekly-event__date {
+  @apply line-clamp-1;
 }

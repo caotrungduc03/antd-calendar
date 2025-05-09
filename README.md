@@ -44,17 +44,17 @@ function App() {
     },
   ] as IEvent[];
 
-  const handleOpenDetail = (date: Date, events: IEvent[]) => {
+  const onOpenDetail = (date: Date, events: IEvent[]) => {
     console.log("Click handle open detail");
     console.log({ date, events });
   };
 
-  const handleOpenCreate = (date: Date) => {
+  const onOpenCreate = (date: Date) => {
     console.log("Click handle open create");
     console.log({ date });
   };
 
-  return <AntdCalendar events={events} handleOpenDetail={handleOpenDetail} handleOpenCreate={handleOpenCreate} />;
+  return <AntdCalendar events={events} onOpenDetail={onOpenDetail} onOpenCreate={onOpenCreate} />;
 }
 
 export default App;
