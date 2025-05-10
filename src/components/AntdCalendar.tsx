@@ -51,7 +51,7 @@ const AntdCalendar = ({
 
   return (
     <div className="antd-calendar">
-      <div className="flex flex-col gap-y-6 p-8 bg-white">
+      <div className="flex flex-col gap-y-6 bg-white">
         <HeaderCalendar
           title={teacherName}
           showTeacherName={showTeacherName}

@@ -26,7 +26,7 @@ export const calculateNormOfWeek = (
   // Calculate number of events in the week
   const normOfWeek = events.filter((event) => {
     const eventDate = dayjs(event.startDate);
-    return eventDate.isAfter(startOfWeek) && eventDate.isBefore(endOfWeek);
+    return event.type === EventType.TEACHING && eventDate.isAfter(startOfWeek) && eventDate.isBefore(endOfWeek);
   }).length;
 
   // Find applicable norm for this week
