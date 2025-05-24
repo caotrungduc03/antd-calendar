@@ -103,10 +103,6 @@
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1))
 }
 
-.antd-calendar .p-8 {
-  padding: 2rem
-}
-
 .antd-calendar .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem
@@ -202,6 +198,10 @@
 
 .antd-calendar table {
   border-collapse: collapse
+}
+
+.antd-calendar .ant-picker-input > input {
+  text-align: center
 }
 
 .antd-calendar .event-info {

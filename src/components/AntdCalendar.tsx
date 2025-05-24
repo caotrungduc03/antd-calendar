@@ -34,14 +34,11 @@ const AntdCalendar = ({
   const [calendarMode, setCalendarMode] = useState<CalendarMode>("month");
 
   const startDate = useMemo(
-    () => dayjs(currentDate).startOf(calendarMode).startOf("week").add(1, "day"),
+    () => dayjs(currentDate).startOf(calendarMode).startOf("week"),
     [currentDate, calendarMode]
-  ); // add 1 day because start of week is Sunday
+  );
 
-  const endDate = useMemo(
-    () => dayjs(currentDate).endOf(calendarMode).endOf("week").add(1, "day"),
-    [currentDate, calendarMode]
-  ); // add 1 day because end of week is Saturday
+  const endDate = useMemo(() => dayjs(currentDate).endOf(calendarMode).endOf("week"), [currentDate, calendarMode]);
 
   useEffectAfterMounted(() => {
     if (onRefetchAPI) {

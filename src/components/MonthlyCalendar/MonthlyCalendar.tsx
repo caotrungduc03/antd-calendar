@@ -105,12 +105,7 @@ const MonthlyCalendar = ({
 
       return {
         id: index,
-        norm: calculateNormOfWeek(
-          norms,
-          events,
-          week,
-          week.endOf("week").add(1, "day") // add 1 day because end of week is Saturday
-        ),
+        norm: calculateNormOfWeek(norms, events, week, week.endOf("week")),
         ...eventsOfWeek,
       };
     });

@@ -17,6 +17,10 @@
   @apply border-collapse;
 }
 
+.antd-calendar .ant-picker-input > input {
+  @apply text-center;
+}
+
 .antd-calendar .event-info {
   @apply border-info bg-info/5 text-info;
 }
