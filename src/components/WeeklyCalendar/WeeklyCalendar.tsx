@@ -20,6 +20,8 @@ interface IWeeklyCalendarProps {
   onOpenCreate: (date: Date) => void;
   onEventDetail?: (event: IEvent) => void;
   loading?: boolean;
+  weeklyNormTitle?: string;
+  weekTitles?: string[];
 }
 
 const getEventAllDay = (events: IEvent[], targetDate: Dayjs) =>
@@ -70,6 +72,8 @@ const WeeklyCalendar = ({
   onOpenCreate,
   onEventDetail,
   loading,
+  weeklyNormTitle,
+  weekTitles,
 }: IWeeklyCalendarProps) => {
   const getTableColumns = () => {
     const { normOfWeek, totalNorm } = calculateNormOfWeek(norms, events, startDate, endDate);
@@ -78,7 +82,7 @@ const WeeklyCalendar = ({
         <div className="weekly-calendar__title">
           {showWeeklyNorm && (
             <React.Fragment>
-              <div className="!text-warning">Weekly Norm</div>
+              <div className="!text-warning">{weeklyNormTitle}</div>
               <div
                 className={clsx(normOfWeek > totalNorm ? "!text-error" : "!text-warning")}
               >{`${normOfWeek}/${totalNorm}`}</div>
@@ -95,7 +99,7 @@ const WeeklyCalendar = ({
     const dayColumns: ITableColumn[] = Object.values(DaysOfWeek).map((day, index) => ({
       title: (
         <div className="weekly-calendar__title">
-          <div>{day.slice(0, 3)}</div>
+          <div>{weekTitles ? weekTitles[index] : day.slice(0, 3)}</div>
           <div>{dayjs(startDate).add(index, "day").format("DD/MM")}</div>
         </div>
       ),

@@ -16,6 +16,8 @@ interface IMonthlyCalendarProps {
   onOpenDetail: (date: Date, events: IEvent[]) => void;
   onOpenCreate: (date: Date) => void;
   loading?: boolean;
+  weeklyNormTitle?: string;
+  monthTitles?: string[];
 }
 
 const getEventsOfWeek = (events: IEvent[], targetDate: Dayjs): EventsByDay =>
@@ -39,10 +41,12 @@ const MonthlyCalendar = ({
   onOpenDetail,
   onOpenCreate,
   loading,
+  weeklyNormTitle,
+  monthTitles,
 }: IMonthlyCalendarProps) => {
   const getTableColumns = () => {
     const weeklyNormColumn: ITableColumn = {
-      title: <div className="text-center font-semibold text-sm weekly-norm-title text-warning">Weekly Norm</div>,
+      title: <div className="text-center font-semibold text-sm weekly-norm-title text-warning">{weeklyNormTitle}</div>,
       dataIndex: "norm",
       key: "norm",
       minWidth: 100,
@@ -64,7 +68,9 @@ const MonthlyCalendar = ({
     };
 
     const dayColumns: ITableColumn[] = Object.values(DaysOfWeek).map((day, index) => ({
-      title: <div className="text-center font-semibold text-sm">{day.slice(0, 3)}</div>,
+      title: (
+        <div className="text-center font-semibold text-sm">{monthTitles ? monthTitles[index] : day.slice(0, 3)}</div>
+      ),
       dataIndex: day,
       key: day,
       width: "14%",

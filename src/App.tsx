@@ -303,6 +303,9 @@ function App() {
         onRefetchAPI={handleFetchAPI}
         onOpenDetail={onOpenDetail}
         onOpenCreate={onOpenCreate}
+        weeklyNormTitle="Định mức"
+        monthTitles={["Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy", "Chủ Nhật"]}
+        weekTitles={["Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy", "Chủ Nhật"]}
       />
     </main>
   );

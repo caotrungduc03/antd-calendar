@@ -17,6 +17,9 @@ interface IAntdCalendarProps {
   onOpenCreate: (date: Date) => void;
   onRefetchAPI?: (startDate: Date, endDate: Date) => Promise<void>;
   loading?: boolean;
+  weeklyNormTitle?: string;
+  monthTitles?: string[];
+  weekTitles?: string[];
 }
 
 const AntdCalendar = ({
@@ -29,6 +32,9 @@ const AntdCalendar = ({
   onOpenCreate,
   onRefetchAPI,
   loading,
+  weeklyNormTitle = "Weekly Norms",
+  monthTitles,
+  weekTitles,
 }: IAntdCalendarProps) => {
   const [currentDate, setCurrentDate] = useState<Dayjs>(dayjs());
   const [calendarMode, setCalendarMode] = useState<CalendarMode>("month");
@@ -68,6 +74,8 @@ const AntdCalendar = ({
             onOpenDetail={onOpenDetail}
             onOpenCreate={onOpenCreate}
             loading={loading}
+            weeklyNormTitle={weeklyNormTitle}
+            monthTitles={monthTitles}
           />
         )}
         {calendarMode === "week" && (
@@ -80,6 +88,8 @@ const AntdCalendar = ({
             onOpenDetail={onOpenDetail}
             onOpenCreate={onOpenCreate}
             loading={loading}
+            weeklyNormTitle={weeklyNormTitle}
+            weekTitles={weekTitles}
           />
         )}
       </div>
