@@ -1,6 +1,12 @@
 import dayjs, { Dayjs } from "dayjs";
+import updateLocale from "dayjs/plugin/updateLocale";
 import { DaysOfWeek, EventType } from "../constants";
 import { IEvent, INorm, INormOfWeek } from "../types";
+
+dayjs.extend(updateLocale);
+dayjs.updateLocale("en", {
+  weekStart: 1,
+});
 
 export const customDateFormat = (value: Dayjs | Date, formatStr: string) => dayjs(value).format(formatStr);
 
