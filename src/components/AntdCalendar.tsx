@@ -17,6 +17,9 @@ interface IAntdCalendarProps {
   onOpenCreate: (date: Date) => void;
   onRefetchAPI?: (startDate: Date, endDate: Date) => Promise<void>;
   loading?: boolean;
+  weeklyNormTitle?: string;
+  monthTitles?: string[];
+  weekTitles?: string[];
 }
 
 const AntdCalendar = ({
@@ -29,19 +32,19 @@ const AntdCalendar = ({
   onOpenCreate,
   onRefetchAPI,
   loading,
+  weeklyNormTitle = "Weekly Norms",
+  monthTitles,
+  weekTitles,
 }: IAntdCalendarProps) => {
   const [currentDate, setCurrentDate] = useState<Dayjs>(dayjs());
   const [calendarMode, setCalendarMode] = useState<CalendarMode>("month");
 
   const startDate = useMemo(
-    () => dayjs(currentDate).startOf(calendarMode).startOf("week").add(1, "day"),
+    () => dayjs(currentDate).startOf(calendarMode).startOf("week"),
     [currentDate, calendarMode]
-  ); // add 1 day because start of week is Sunday
+  );
 
-  const endDate = useMemo(
-    () => dayjs(currentDate).endOf(calendarMode).endOf("week").add(1, "day"),
-    [currentDate, calendarMode]
-  ); // add 1 day because end of week is Saturday
+  const endDate = useMemo(() => dayjs(currentDate).endOf(calendarMode).endOf("week"), [currentDate, calendarMode]);
 
   useEffectAfterMounted(() => {
     if (onRefetchAPI) {
@@ -51,7 +54,7 @@ const AntdCalendar = ({
 
   return (
     <div className="antd-calendar">
-      <div className="flex flex-col gap-y-6 p-8 bg-white">
+      <div className="flex flex-col gap-y-6 bg-white">
         <HeaderCalendar
           title={teacherName}
           showTeacherName={showTeacherName}
@@ -71,6 +74,8 @@ const AntdCalendar = ({
             onOpenDetail={onOpenDetail}
             onOpenCreate={onOpenCreate}
             loading={loading}
+            weeklyNormTitle={weeklyNormTitle}
+            monthTitles={monthTitles}
           />
         )}
         {calendarMode === "week" && (
@@ -83,6 +88,8 @@ const AntdCalendar = ({
             onOpenDetail={onOpenDetail}
             onOpenCreate={onOpenCreate}
             loading={loading}
+            weeklyNormTitle={weeklyNormTitle}
+            weekTitles={weekTitles}
           />
         )}
       </div>

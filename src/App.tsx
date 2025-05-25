@@ -72,7 +72,7 @@ const fakeEvents: IEvent[] = [
     id: "1739958920995-8-0",
     title: "Random Event 9",
     startDate: new Date("2025-03-06T00:54:20.994Z"),
-    endDate: new Date("2025-03-06T03:54:20.994Z"),
+    endDate: new Date("2025-03-06T01:54:20.994Z"),
     type: EventType.BUSY,
     description: "This is a random event",
   },
@@ -303,6 +303,9 @@ function App() {
         onRefetchAPI={handleFetchAPI}
         onOpenDetail={onOpenDetail}
         onOpenCreate={onOpenCreate}
+        weeklyNormTitle="Định mức"
+        monthTitles={["Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy", "Chủ Nhật"]}
+        weekTitles={["Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy", "Chủ Nhật"]}
       />
     </main>
   );

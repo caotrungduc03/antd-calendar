@@ -1,4 +1,5 @@
 import { BookOutlined, CalendarOutlined, CheckCircleOutlined, StarOutlined } from "@ant-design/icons";
+import clsx from "clsx";
 import dayjs from "dayjs";
 import {
   BORDER_WEEKLY_CELL,
@@ -50,14 +51,12 @@ const getIconEvent = {
 const WeeklyEvent = ({ event, onOpenDetail, onEventDetail, zIndex }: IWeeklyEventProps) => {
   const { top, height } = calculateBoxSize(event.startDate, event.endDate, event.isAllDay);
 
-  const isMinHeight = height < MIN_HEIGHT_EVENT;
-
   const formattedDate =
     customDateFormat(event.startDate, TIME_FORMAT) + " - " + customDateFormat(event.endDate, TIME_FORMAT);
 
   return (
     <div
-      className={`event-${convertType[event.type]} ${isMinHeight ? "event--min-height" : ""}`}
+      className={`event-${convertType[event.type]}`}
       onClick={() => {
         onOpenDetail(dayjs(event.startDate).toDate(), [event]);
         onEventDetail && onEventDetail(event);
@@ -68,9 +67,18 @@ const WeeklyEvent = ({ event, onOpenDetail, onEventDetail, zIndex }: IWeeklyEven
         zIndex,
       }}
     >
-      <div className={`weekly-event ${height <= MIN_HEIGHT_HIDE_ALL ? "weekly-event--collapse" : ""}`}>
+      <div
+        className={clsx("weekly-event", {
+          "weekly-event--collapse": height <= MIN_HEIGHT_HIDE_ALL,
+          "weekly-event--min-height": height <= MIN_HEIGHT_EVENT,
+        })}
+      >
         <div className="flex">{getIconEvent[event.type]}</div>
-        <div className={height <= MIN_HEIGHT_HIDE_DETAILS ? "weekly-event--collapse" : ""}>
+        <div
+          className={clsx({
+            "weekly-event--collapse": height <= MIN_HEIGHT_HIDE_DETAILS,
+          })}
+        >
           <div className="weekly-event__title">
             <div title={event.title}>{event.title}</div>
           </div>

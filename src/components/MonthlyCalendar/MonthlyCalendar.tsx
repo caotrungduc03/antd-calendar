@@ -16,6 +16,8 @@ interface IMonthlyCalendarProps {
   onOpenDetail: (date: Date, events: IEvent[]) => void;
   onOpenCreate: (date: Date) => void;
   loading?: boolean;
+  weeklyNormTitle?: string;
+  monthTitles?: string[];
 }
 
 const getEventsOfWeek = (events: IEvent[], targetDate: Dayjs): EventsByDay =>
@@ -39,10 +41,12 @@ const MonthlyCalendar = ({
   onOpenDetail,
   onOpenCreate,
   loading,
+  weeklyNormTitle,
+  monthTitles,
 }: IMonthlyCalendarProps) => {
   const getTableColumns = () => {
     const weeklyNormColumn: ITableColumn = {
-      title: <div className="text-center font-semibold text-sm weekly-norm-title">Weekly Norm</div>,
+      title: <div className="text-center font-semibold text-sm weekly-norm-title text-warning">{weeklyNormTitle}</div>,
       dataIndex: "norm",
       key: "norm",
       minWidth: 100,
@@ -50,7 +54,12 @@ const MonthlyCalendar = ({
         const { normOfWeek, totalNorm } = value;
         return (
           <div className="weekly-norm-cell">
-            <div className={clsx("weekly-norm-value", normOfWeek > totalNorm && "text-error")}>
+            <div
+              className={clsx(
+                "border-t-0.25 border-solid border-gray-200",
+                normOfWeek > totalNorm ? "text-error" : "text-warning"
+              )}
+            >
               {`${normOfWeek}/${totalNorm}`}
             </div>
           </div>
@@ -59,7 +68,9 @@ const MonthlyCalendar = ({
     };
 
     const dayColumns: ITableColumn[] = Object.values(DaysOfWeek).map((day, index) => ({
-      title: <div className="text-center font-semibold text-sm">{day.slice(0, 3)}</div>,
+      title: (
+        <div className="text-center font-semibold text-sm">{monthTitles ? monthTitles[index] : day.slice(0, 3)}</div>
+      ),
       dataIndex: day,
       key: day,
       width: "14%",
@@ -105,12 +116,7 @@ const MonthlyCalendar = ({
 
       return {
         id: index,
-        norm: calculateNormOfWeek(
-          norms,
-          events,
-          week,
-          week.endOf("week").add(1, "day") // add 1 day because end of week is Saturday
-        ),
+        norm: calculateNormOfWeek(norms, events, week, week.endOf("week")),
         ...eventsOfWeek,
       };
     });

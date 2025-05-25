@@ -1,6 +1,12 @@
 import dayjs, { Dayjs } from "dayjs";
+import updateLocale from "dayjs/plugin/updateLocale";
 import { DaysOfWeek, EventType } from "../constants";
 import { IEvent, INorm, INormOfWeek } from "../types";
+
+dayjs.extend(updateLocale);
+dayjs.updateLocale("en", {
+  weekStart: 1,
+});
 
 export const customDateFormat = (value: Dayjs | Date, formatStr: string) => dayjs(value).format(formatStr);
 
@@ -26,7 +32,7 @@ export const calculateNormOfWeek = (
   // Calculate number of events in the week
   const normOfWeek = events.filter((event) => {
     const eventDate = dayjs(event.startDate);
-    return eventDate.isAfter(startOfWeek) && eventDate.isBefore(endOfWeek);
+    return event.type === EventType.TEACHING && eventDate.isAfter(startOfWeek) && eventDate.isBefore(endOfWeek);
   }).length;
 
   // Find applicable norm for this week
