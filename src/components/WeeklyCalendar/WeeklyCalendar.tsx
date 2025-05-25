@@ -78,8 +78,10 @@ const WeeklyCalendar = ({
         <div className="weekly-calendar__title">
           {showWeeklyNorm && (
             <React.Fragment>
-              <div>Weekly Norm</div>
-              <div className={clsx(normOfWeek > totalNorm && "!text-error")}>{`${normOfWeek}/${totalNorm}`}</div>
+              <div className="!text-warning">Weekly Norm</div>
+              <div
+                className={clsx(normOfWeek > totalNorm ? "!text-error" : "!text-warning")}
+              >{`${normOfWeek}/${totalNorm}`}</div>
             </React.Fragment>
           )}
         </div>

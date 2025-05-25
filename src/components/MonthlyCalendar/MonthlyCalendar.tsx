@@ -42,7 +42,7 @@ const MonthlyCalendar = ({
 }: IMonthlyCalendarProps) => {
   const getTableColumns = () => {
     const weeklyNormColumn: ITableColumn = {
-      title: <div className="text-center font-semibold text-sm weekly-norm-title">Weekly Norm</div>,
+      title: <div className="text-center font-semibold text-sm weekly-norm-title text-warning">Weekly Norm</div>,
       dataIndex: "norm",
       key: "norm",
       minWidth: 100,
@@ -50,7 +50,12 @@ const MonthlyCalendar = ({
         const { normOfWeek, totalNorm } = value;
         return (
           <div className="weekly-norm-cell">
-            <div className={clsx("weekly-norm-value", normOfWeek > totalNorm && "text-error")}>
+            <div
+              className={clsx(
+                "border-t-0.25 border-solid border-gray-200",
+                normOfWeek > totalNorm ? "text-error" : "text-warning"
+              )}
+            >
               {`${normOfWeek}/${totalNorm}`}
             </div>
           </div>

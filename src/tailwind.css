@@ -96,15 +96,15 @@
 }
 
 .weekly-calendar__cell > div {
-  @apply absolute z-10 left-[5%] w-[90%] !border-l-2 !border-solid rounded-sm p-3 cursor-pointer;
-}
-
-.weekly-calendar__cell > div.event--min-height {
-  @apply py-1;
+  @apply absolute z-10 left-[5%] w-[90%] !border-l-2 !border-solid rounded-sm cursor-pointer;
 }
 
 .weekly-event {
-  @apply flex flex-col gap-y-2;
+  @apply flex flex-col gap-y-2 p-3;
+}
+
+.weekly-event--min-height {
+  @apply py-1;
 }
 
 .weekly-event__title {

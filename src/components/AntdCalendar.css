@@ -156,6 +156,11 @@
   color: rgb(245 34 45 / var(--tw-text-opacity, 1)) !important
 }
 
+.antd-calendar .\!text-warning {
+  --tw-text-opacity: 1 !important;
+  color: rgb(250 140 22 / var(--tw-text-opacity, 1)) !important
+}
+
 .antd-calendar .text-black {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity, 1))
@@ -174,6 +179,11 @@
 .antd-calendar .text-info {
   --tw-text-opacity: 1;
   color: rgb(22 119 255 / var(--tw-text-opacity, 1))
+}
+
+.antd-calendar .text-warning {
+  --tw-text-opacity: 1;
+  color: rgb(250 140 22 / var(--tw-text-opacity, 1))
 }
 
 .antd-calendar .filter {
@@ -335,19 +345,19 @@
   cursor: pointer;
   border-radius: 0.125rem;
   border-left-width: 2px !important;
-  border-style: solid !important;
-  padding: 0.75rem
-}
-
-.weekly-calendar__cell > div.event--min-height {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem
+  border-style: solid !important
 }
 
 .weekly-event {
   display: flex;
   flex-direction: column;
-  row-gap: 0.5rem
+  row-gap: 0.5rem;
+  padding: 0.75rem
+}
+
+.weekly-event--min-height {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem
 }
 
 .weekly-event__title {
